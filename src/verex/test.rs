@@ -1,8 +1,8 @@
 use regex::Regex;
 
-use verex::escape;
-use verex::Expression as E;
-use verex::Verex;
+use super::escape;
+use crate::Expression as E;
+use crate::Verex;
 
 const A_VEREX_STRING: &'static str = r"(?:a)";
 
@@ -174,7 +174,7 @@ fn test_capture_value() {
     let text = "bar foo baz";
     let regex = verex.compile().unwrap();
     let capture = regex.captures(text).unwrap();
-    assert_eq!(capture.at(1), Some("foo"));
+    assert_eq!(capture.get(1).map(|m| m.as_str()), Some("foo"));
 }
 
 #[test]
@@ -184,8 +184,8 @@ fn test_capture() {
     let text = "bar [a]* baz aa";
     let regex = verex.compile().unwrap();
     let capture = regex.captures(text).unwrap();
-    assert_eq!(capture.at(1), Some("[a]*"));
-    assert_eq!(capture.at(2), None); // regex is escaped and does not match
+    assert_eq!(capture.get(1).map(|m| m.as_str()), Some("[a]*"));
+    assert_eq!(capture.get(2).map(|m| m.as_str()), None); // regex is escaped and does not match
 }
 
 #[test]
@@ -196,11 +196,11 @@ fn test_capture_expr() {
     let regex = verex.compile().unwrap();
     let mut captures = regex.captures_iter(text);
     let capture1 = captures.next().unwrap();
-    assert_eq!(capture1.at(1), Some("aa"));
-    assert_eq!(capture1.at(2), None);
+    assert_eq!(capture1.get(1).map(|m| m.as_str()), Some("aa"));
+    assert_eq!(capture1.get(2).map(|m| m.as_str()), None);
     let capture2 = captures.next().unwrap();
-    assert_eq!(capture2.at(1), Some("aaaa"));
-    assert_eq!(capture2.at(2), None);
+    assert_eq!(capture2.get(1).map(|m| m.as_str()), Some("aaaa"));
+    assert_eq!(capture2.get(2).map(|m| m.as_str()), None);
 
     assert!(captures.next().is_none());
 }

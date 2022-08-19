@@ -130,8 +130,8 @@
 extern crate bitflags;
 extern crate regex;
 
-pub use verex::Verex;
-pub use verex::Expression;
+pub use crate::verex::Verex;
+pub use crate::verex::Expression;
 
 mod verex;
 

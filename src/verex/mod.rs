@@ -4,9 +4,9 @@ use regex::Error;
 #[cfg(test)] pub mod test;
 
 bitflags! {
-    flags Modifiers: u8 {
-        const MULTI_LINE        = 0b00000001,
-        const CASE_INSENSITIVE  = 0b00000010,
+    struct Modifiers: u8 {
+        const MULTI_LINE        = 0b00000001;
+        const CASE_INSENSITIVE  = 0b00000010;
     }
 }
 
@@ -60,7 +60,7 @@ fn escape(string: &str) -> String {
     let mut result = string.to_owned();
     for pair in ESCAPE_PAIRS.into_iter() {
         let regex = Regex::new(pair.0).unwrap();
-        result = regex.replace_all(result.as_ref(), pair.1);
+        result = regex.replace_all(result.as_ref(), pair.1).to_string();
     }
     result
 }
@@ -108,10 +108,10 @@ impl Verex {
     fn update_source_with_modifiers(&mut self) -> &mut Verex {
         self.source.clear();
         self.source.push_str(r"(?");
-        if self.modifiers.contains(CASE_INSENSITIVE) {
+        if self.modifiers.contains(Modifiers::CASE_INSENSITIVE) {
             self.source.push('i');
         }
-        if self.modifiers.contains(MULTI_LINE) {
+        if self.modifiers.contains(Modifiers::MULTI_LINE) {
             self.source.push('m');
         }
         self.source.push(':');
@@ -365,17 +365,17 @@ impl Verex {
 
     /// Replace a substring
     pub fn replace(& self, text: &str, replacement: &str) -> Result<String, Error> {
-        let regex = try!(self.compile());
-        Ok(regex.replace(text, replacement))
+        let regex = self.compile()?;
+        Ok(regex.replace(text, replacement).to_string())
     }
 
     /// Toggle whether ^ and $ match line start and end or string start and end
     pub fn search_one_line(&mut self, enable: bool) -> &mut Verex {
         if enable {
-            self.modifiers.remove(MULTI_LINE);
+            self.modifiers.remove(Modifiers::MULTI_LINE);
         }
         else {
-            self.modifiers.insert(MULTI_LINE);
+            self.modifiers.insert(Modifiers::MULTI_LINE);
         }
         self.update_source_with_modifiers()
     }
@@ -418,10 +418,10 @@ impl Verex {
     /// Toggle whether to match case-sensitively or not
     pub fn with_any_case(&mut self, enable: bool) -> &mut Verex {
         if enable {
-            self.modifiers.insert(CASE_INSENSITIVE);
+            self.modifiers.insert(Modifiers::CASE_INSENSITIVE);
         }
         else {
-            self.modifiers.remove(CASE_INSENSITIVE);
+            self.modifiers.remove(Modifiers::CASE_INSENSITIVE);
         }
         self.update_source_with_modifiers()
     }
