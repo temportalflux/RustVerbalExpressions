@@ -11,16 +11,28 @@ It uses the [`regex`](https://github.com/rust-lang-nursery/regex) crate to compi
 
 Versions are numbered according to [semver](http://semver.org/).
 
-# Usage
+## Installation
+
+### Cargo
+
+* Install the rust toolchain in order to have cargo installed by following
+  [this](https://www.rust-lang.org/tools/install) guide.
+* run `cargo install {{project-name}}`
+
+OR
+
 Add this to your Cargo.toml:
 ```toml
 [dependencies]
 verex = "0.2"
 ```
-and this to your crate root:
-```rust
-extern crate verex;
-```
+
+## License
+
+Licensed under
+
+ * MIT license
+   ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 # Examples
 A simple example to show the usage:
