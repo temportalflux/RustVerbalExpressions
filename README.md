@@ -1,11 +1,13 @@
 RustVerbalExpressions
 =====================
 
+[![Build Status](https://travis-ci.org/VerbalExpressions/RustVerbalExpressions.svg?branch=master)](https://travis-ci.org/VerbalExpressions/RustVerbalExpressions)
+[![Crates.io](https://img.shields.io/crates/v/verex.svg)](https://crates.io/crates/verex)
+[![Docs.rs](https://docs.rs/verex/badge.svg)](https://docs.rs/verex)
+
 This crate provides a Rust implementation of VerbalExpressions in order to build regex
 strings without knowing the minutiae of regex syntax.
 It uses the [`regex`](https://github.com/rust-lang-nursery/regex) crate to compile the created regex strings.
-
-[![Build Status](https://travis-ci.org/VerbalExpressions/RustVerbalExpressions.svg?branch=master)](https://travis-ci.org/VerbalExpressions/RustVerbalExpressions)
 
 Versions are numbered according to [semver](http://semver.org/).
 
